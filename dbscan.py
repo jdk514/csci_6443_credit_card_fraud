@@ -1,10 +1,33 @@
-import csv, pdb
+import csv, sys, getopt
+import os.path
 import ddbscan
+import pdb
+
 #I think that 5 is a good min cluster number as values come in clumps of 5
-# Currently looking like 50
+# Currently looking like 50 for radius of neighbor nodes gets best balance of anomalies and clusters
 scan = ddbscan.DDBSCAN(50,5)
 
-with open('min2_parsedfile.csv', 'rb') as datafile:
+argv = sys.argv[1:]
+
+# Get input file from command-line argument
+try:
+  opts, args = getopt.getopt(argv,"hi:",["ifile="])
+except getopt.GetoptError:
+  print 'test.py -i <inputfile>'
+  sys.exit(2)
+
+for opt, arg in opts:
+	if opt == '-h':
+		print "dbscan.py -i <inputfile>"
+		sys.exit(2)
+	elif opt in ("-i", "--ifile"):
+		inputfile = arg
+		if not os.path.isfile(inputfile):
+			print "File does not exist"
+			sys.exit(2)
+
+# Open file to add records to our dbscan graph
+with open(inputfile, 'rb') as datafile:
 	reader = csv.reader(datafile, delimiter=',', quotechar='"')
 
 	print 'Started adding points'
