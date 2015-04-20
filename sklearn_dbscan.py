@@ -39,10 +39,11 @@ def main():
 
 	dbscan(inputfile, eps, min_samples)
 
-def write_result(eps, min_samples, inputfile, clusters, anomalies, anom_mean, anom_std):
-	with open('dbscan_results', 'a') as resultfile:
+def write_result(eps, min_samples, inputfile, clusters, anomalies, anom_mean, anom_std, anoms_list):
+	with open('dbscan_results.csv', 'a') as resultfile:
 		writer = csv.writer(resultfile, delimiter=',', quotechar='"')
 		writer.writerow([inputfile, eps, min_samples, clusters, anomalies, anom_mean, anom_std])
+		writer.writerow(anoms_list)
 
 	return
 
@@ -100,10 +101,12 @@ def dbscan(inputfile, eps, min_samples):
 
 	anoms = 0
 	anoms_dist = []
+	anoms_list = ["Anomalies at:"]
 	total_anon_nbr_distance = 0
 	for counter,point in enumerate(labels):
 		if point == -1:
 			anoms += 1
+			anoms_list.append(counter)
 			anoms_dist.append(distances[counter][1])
 
 	#Calculate the meand and standard deviation of the distance to nearest neighbors of anomalies
@@ -114,7 +117,7 @@ def dbscan(inputfile, eps, min_samples):
 	print 'Anomalies are on average %f distance from nearest neighbor' % anom_mean
 	print 'Anomalies distance has standard deviation of %f' % anom_std
 
-	write_result(eps=eps, min_samples=min_samples, inputfile=inputfile, clusters=n_clusters_, anomalies=anoms, anom_mean=anom_mean, anom_std=anom_std)
+	write_result(eps=eps, min_samples=min_samples, inputfile=inputfile, clusters=n_clusters_, anomalies=anoms, anom_mean=anom_mean, anom_std=anom_std, anoms_list=anoms_list)
 	# avg_anom_dist = total_anon_nbr_distance / float(anoms)
 	# print("Anomalies: %d with avg neighbor %f away") % (anoms, avg_anom_dist)
 
