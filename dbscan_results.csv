@@ -1,0 +1,2 @@
+Dataset,Epsilon,Min Cluster,Clusters,Anomalies,Anomaly Avg Distance,Anomaly STD
+data/min_bin_parsedfile.csv,2,3,53,34,2.3981451464,1.5431230013
