@@ -1,5 +1,5 @@
-import sys, getopt, csv
-import os.path
+import sys, getopt, csv, os.path
+
 import numpy as np
 
 from sklearn.cluster import DBSCAN
@@ -7,8 +7,6 @@ from sklearn import metrics
 from sklearn.datasets.samples_generator import make_blobs
 from sklearn.preprocessing import StandardScaler, normalize
 from sklearn.neighbors import NearestNeighbors
-
-import pdb
 
 def main():
 	argv = sys.argv[1:]
@@ -25,7 +23,7 @@ def main():
 
 	for opt, arg in opts:
 		if opt == '-h':
-			print "dbscan.py -i <inputfile>"
+			print "dbscan.py -i <inputfile> -e <epsilon> -c <min_cluster_size>"
 			sys.exit(2)
 		elif opt in ("-i", "--ifile"):
 			inputfile = arg

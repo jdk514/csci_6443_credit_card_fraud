@@ -1,10 +1,7 @@
 import csv, sys, getopt
 import os.path
 import ddbscan
-import pdb
 
-#I think that 5 is a good min cluster number as values come in clumps of 5
-# Currently looking like 50 for radius of neighbor nodes gets best balance of anomalies and clusters
 scan = ddbscan.DDBSCAN(50,5)
 
 argv = sys.argv[1:]
@@ -13,7 +10,7 @@ argv = sys.argv[1:]
 try:
   opts, args = getopt.getopt(argv,"hi:",["ifile="])
 except getopt.GetoptError:
-  print 'test.py -i <inputfile>'
+  print 'python dbscan.py -i <inputfile>'
   sys.exit(2)
 
 for opt, arg in opts:
